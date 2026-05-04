@@ -1,0 +1,167 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <h4><i class="fas fa-user"></i> Perfil do Usuário</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form">
+            <div class="form-group">
+              <label for="nome"><i class="fas fa-user"></i> Nome</label>
+              <input
+                type="text"
+                id="nome"
+                class="form-control"
+                formControlName="nome"
+                pInputText
+                readonly
+                [ngClass]="{ 'readonly-field': true }"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="telefone"><i class="fas fa-phone"></i> Telefone</label>
+              <input
+                type="text"
+                id="telefone"
+                class="form-control"
+                formControlName="telefone"
+                pInputText
+                readonly
+                [ngClass]="{ 'readonly-field': true }"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="login"><i class="fas fa-sign-in-alt"></i> Login</label>
+              <input
+                type="text"
+                id="login"
+                class="form-control"
+                formControlName="login"
+                pInputText
+                [readonly]="!modoEdicao"
+                [ngClass]="{ 'readonly-field': !modoEdicao }"
+              />
+              <div *ngIf="submitted && f.login.errors" class="error-message">
+                <p-message
+                  *ngIf="f.login.errors.required"
+                  severity="error"
+                  text="Login é obrigatório"
+                ></p-message>
+                <p-message
+                  *ngIf="f.login.errors.minlength"
+                  severity="error"
+                  text="Mínimo de 4 caracteres"
+                ></p-message>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="senha"><i class="fas fa-lock"></i> Senha</label>
+              <div class="input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  id="senha"
+                  class="form-control"
+                  formControlName="senha"
+                  pInputText
+                  [placeholder]="modoEdicao ? 'Digite nova senha' : '••••••••'"
+                  [readonly]="!modoEdicao"
+                  [ngClass]="{ 'readonly-field': !modoEdicao }"
+                />
+                <div class="input-group-append" *ngIf="modoEdicao">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="togglePassword()"
+                  >
+                    <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="submitted && f.senha.errors" class="error-message">
+                <p-message
+                  *ngIf="f.senha.errors.required"
+                  severity="error"
+                  text="Senha é obrigatória"
+                ></p-message>
+                <p-message
+                  *ngIf="f.senha.errors.minlength"
+                  severity="error"
+                  text="Mínimo de 6 caracteres"
+                ></p-message>
+              </div>
+            </div>
+
+            <div class="form-group text-center" *ngIf="!modoEdicao">
+              <p-button
+                type="button"
+                label="EDITAR"
+                icon="fas fa-edit"
+                (onClick)="habilitarEdicao()"
+                styleClass="ui-button-warning"
+              ></p-button>
+              <p-button
+                type="button"
+                label="EXCLUIR CONTA"
+                icon="fas fa-trash"
+                (onClick)="abrirModalExclusao()"
+                styleClass="ui-button-danger ml-2"
+              ></p-button>
+            </div>
+
+            <div class="form-group text-center" *ngIf="modoEdicao">
+              <p-button
+                type="button"
+                label="SALVAR"
+                icon="fas fa-save"
+                (onClick)="salvar()"
+                styleClass="ui-button-success"
+              ></p-button>
+              <p-button
+                type="button"
+                label="CANCELAR"
+                icon="fas fa-times"
+                (onClick)="cancelarEdicao()"
+                styleClass="ui-button-secondary ml-2"
+              ></p-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog
+  header="Confirmar Exclusão"
+  [(visible)]="showDeleteModal"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '400px' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="p-dialog-content">
+    <p><i class="fas fa-exclamation-triangle"></i> Tem certeza que deseja excluir sua conta?</p>
+    <p class="text-muted">Esta ação não pode ser desfeita.</p>
+  </div>
+  <div class="p-dialog-footer">
+    <p-button
+      type="button"
+      label="CANCELAR"
+      icon="fas fa-times"
+      (onClick)="fecharModalExclusao()"
+      styleClass="ui-button-secondary"
+    ></p-button>
+    <p-button
+      type="button"
+      label="EXCLUIR"
+      icon="fas fa-trash"
+      (onClick)="confirmarExclusao()"
+      styleClass="ui-button-danger"
+    ></p-button>
+  </div>
+</p-dialog>

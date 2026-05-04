@@ -1,3 +1,27 @@
-<header><H1>TESTE</H1></header>
-<router-outlet></router-outlet>
-<footer><H1>teste</H1></footer>
+<header class="header">
+  <div class="header-container">
+    <div class="header-left">
+      <a routerLink="/" class="header-link">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+      </a>
+    </div>
+    <div class="header-center">
+      <h1 class="header-title">ToDo App</h1>
+    </div>
+    <div class="header-right">
+      <span class="header-date">{{ hoje }}</span>
+      <div class="header-actions">
+        <a routerLink="/perfil" class="header-btn" title="Configurações">
+          <i class="fas fa-cog"></i>
+        </a>
+        <button class="header-btn" title="Logout" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

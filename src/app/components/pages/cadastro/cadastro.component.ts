@@ -5,11 +5,11 @@ import { MessageService } from 'primeng/api'
 import { UsuarioService } from 'src/app/services/usuario.service'
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-cadastro',
+  templateUrl: './cadastro.component.html',
+  styleUrls: ['./cadastro.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class CadastroComponent implements OnInit {
   form!: FormGroup
   submitted = false
   showPassword = false
@@ -22,6 +22,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
+      nome: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+      ]),
+      telefone: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\(\d{2}\) \d{4,5}-\d{4}$/),
+      ]),
       login: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -33,6 +42,14 @@ export class LoginComponent implements OnInit {
         Validators.maxLength(20),
       ]),
     })
+  }
+
+  get nome() {
+    return this.form.get('nome')
+  }
+
+  get telefone() {
+    return this.form.get('telefone')
   }
 
   get login() {
@@ -52,32 +69,17 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return
     }
-    const loginValue = this.form.value.login
-    const senhaValue = this.form.value.senha
-    this.usuarioService.login(loginValue).subscribe(
-      (user) => {
-        if (user && senhaValue === '123456') {
-          localStorage.setItem('usuarioLogado', JSON.stringify(user))
-          this.router.navigate(['/'])
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Login realizado com sucesso',
-          })
-        } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Login ou senha inválidos',
-          })
-        }
+    this.usuarioService.cadastrar(this.form.value).subscribe(
+      () => {
+        this.router.navigate(['/auth/login'])
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Usuário cadastrado com sucesso',
+        })
       },
       (error) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Login ou senha inválidos',
-        })
+        console.error(error)
       },
     )
   }

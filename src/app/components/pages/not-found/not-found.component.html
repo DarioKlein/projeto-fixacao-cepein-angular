@@ -1,4 +1,19 @@
-<h1>Error 404 Not Found</h1>
-<i class="fa fa-user"></i>
-<i class="fa fa-home"></i>
-<button pButton type="button" label="Salvar"></button>
+<div class="container">
+  <div class="error-content">
+    <div class="error-code">404</div>
+    <h1 class="error-title">
+      <i class="fas fa-exclamation-triangle"></i> Página Não Encontrada
+    </h1>
+    <p class="error-message">
+      Desculpe, a página que você está procurando não existe ou foi movida.
+    </p>
+    <div class="error-actions">
+      <a routerLink="/" class="btn btn-primary">
+        <i class="fas fa-home"></i> Voltar ao Início
+      </a>
+      <a routerLink="/auth/login" class="btn btn-outline-secondary">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </a>
+    </div>
+  </div>
+</div>

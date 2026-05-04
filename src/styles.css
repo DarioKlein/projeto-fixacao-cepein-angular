@@ -3,3 +3,24 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.ui-message-error {
+  width: 100% !important;
+  background-color: #e45146 !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ui-message-error > .ui-message-icon {
+  color: white !important;
+  margin-top: 2px !important;
+}
+
+.input-mask {
+  border-color: #ced4da !important;
+}
+
+.input-mask:focus {
+  border-color: #007bff !important;
+}

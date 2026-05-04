@@ -3,13 +3,68 @@
     <div class="col-12 col-md-8 col-lg-6">
       <div class="card">
         <div class="card-header">
-          <h4><i class="fas fa-sign-in-alt"></i> Login de Usuário</h4>
+          <h4><i class="fas fa-user-plus"></i> Cadastro de Usuário</h4>
         </div>
         <div class="card-body">
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
+              <label for="nome"><i class="fas fa-user"></i> Nome</label>
+              <input
+                type="text"
+                id="nome"
+                class="form-control"
+                formControlName="nome"
+                pInputText
+                placeholder="Digite seu nome"
+              />
+              <div *ngIf="submitted && nome.errors" class="error-message">
+                <p-message
+                  *ngIf="nome.errors.required"
+                  severity="error"
+                  text="Nome é obrigatório"
+                ></p-message>
+                <p-message
+                  *ngIf="nome.errors.minlength"
+                  severity="error"
+                  text="Mínimo de 3 caracteres"
+                ></p-message>
+                <p-message
+                  *ngIf="nome.errors.maxlength"
+                  severity="error"
+                  text="Máximo de 50 caracteres"
+                ></p-message>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="telefone"
+                ><i class="fas fa-phone"></i> Telefone</label
+              >
+              <p-inputMask
+                mask="(99) 99999-9999"
+                formControlName="telefone"
+                placeholder="Digite seu telefone"
+                styleClass="form-control input-mask"
+                [autoClear]="false"
+              >
+              </p-inputMask>
+              <div *ngIf="submitted && telefone.errors" class="error-message">
+                <p-message
+                  *ngIf="telefone.errors.required"
+                  severity="error"
+                  text="Telefone é obrigatório"
+                ></p-message>
+                <p-message
+                  *ngIf="telefone.errors.pattern"
+                  severity="error"
+                  text="Formato inválido"
+                ></p-message>
+              </div>
+            </div>
+
+            <div class="form-group">
               <label for="login"
-                ><i class="fas fa-user"></i> Login</label
+                ><i class="fas fa-sign-in-alt"></i> Login</label
               >
               <input
                 type="text"
@@ -61,7 +116,7 @@
                   </button>
                 </div>
               </div>
-              <div *ngIf="submitted && senha.errors" class="error-message">
+              <div *ngIf="submitted && senha.invalid" class="error-message">
                 <p-message
                   *ngIf="senha.errors.required"
                   severity="error"
@@ -83,8 +138,8 @@
             <div class="form-group text-center">
               <p-button
                 type="submit"
-                label="ENTRAR"
-                icon="fas fa-sign-in-alt"
+                label="CADASTRAR"
+                icon="fas fa-save"
                 styleClass="ui-button-success"
               ></p-button>
               <p-button
@@ -97,9 +152,9 @@
             </div>
 
             <div class="text-center mt-3">
-              <span class="text-muted">Não tem conta? </span>
-              <a routerLink="/auth/cadastro" class="text-primary font-weight-bold">
-                Cadastre-se aqui
+              <span class="text-muted">Já tem conta? </span>
+              <a routerLink="/auth/login" class="text-primary font-weight-bold">
+                Faça login aqui
               </a>
             </div>
           </form>
