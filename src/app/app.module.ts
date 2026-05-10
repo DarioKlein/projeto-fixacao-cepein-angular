@@ -20,6 +20,8 @@ import { MessageModule } from 'primeng/message'
 import { InputMaskModule } from 'primeng/inputmask';
 import { DialogModule } from 'primeng/dialog';
 import { PerfilComponent } from './components/pages/perfil/perfil.component';
+import { ListaTarefaComponent } from './components/lista-tarefa/lista-tarefa.component';
+import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { PerfilComponent } from './components/pages/perfil/perfil.component';
     NotFoundComponent,
     CadastroComponent,
     PerfilComponent,
+    ListaTarefaComponent,
+    FormTarefaComponent,
   ],
   imports: [
     BrowserModule,

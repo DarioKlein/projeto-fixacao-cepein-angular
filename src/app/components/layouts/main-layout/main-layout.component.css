@@ -32,16 +32,6 @@
   opacity: 0.8;
 }
 
-.header-center {
-  text-align: center;
-}
-
-.header-title {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-}
-
 .header-right {
   display: flex;
   align-items: center;

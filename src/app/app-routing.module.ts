@@ -7,6 +7,7 @@ import { AuthLayoutComponent } from './components/layouts/auth-layout/auth-layou
 import { NotFoundComponent } from './components/pages/not-found/not-found.component'
 import { CadastroComponent } from './components/pages/cadastro/cadastro.component'
 import { PerfilComponent } from './components/pages/perfil/perfil.component'
+import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component'
 
 const routes: Routes = [
   {
@@ -15,6 +16,8 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'perfil', component: PerfilComponent },
+      { path: 'tarefa/nova', component: FormTarefaComponent },
+      { path: 'tarefa/editar/:id', component: FormTarefaComponent },
     ],
   },
   {
