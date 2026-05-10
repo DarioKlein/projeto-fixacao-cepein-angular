@@ -16,6 +16,7 @@ export class FormTarefaComponent implements OnInit {
   isEdicao = false
   tarefaId!: number
   usuarioId!: number
+  tarefaCriada = false
 
   constructor(
     private tarefaService: TarefaService,
@@ -150,7 +151,8 @@ export class FormTarefaComponent implements OnInit {
         detail: 'Tarefa cadastrada com sucesso',
       })
 
-      setTimeout(() => this.router.navigate(['/']), 1500)
+      this.tarefaCriada = true
+      setTimeout(() => this.router.navigate(['/']), 500)
     }
   }
 

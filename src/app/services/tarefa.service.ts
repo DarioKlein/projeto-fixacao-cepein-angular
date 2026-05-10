@@ -21,8 +21,7 @@ export class TarefaService {
     const data = localStorage.getItem('listaTarefas')
     if (data) {
       const tarefas = JSON.parse(data)
-      let id = tarefas.length - 1
-      tarefa.id = ++id
+      tarefa.id = tarefas.length + 1
       tarefas.push(tarefa)
       localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
       return this.buscarPorId(tarefa.id!)

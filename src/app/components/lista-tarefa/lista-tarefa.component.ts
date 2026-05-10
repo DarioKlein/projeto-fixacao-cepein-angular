@@ -105,24 +105,25 @@ export class ListaTarefaComponent implements OnInit {
 
   confirmarExclusao(): void {
     if (this.tarefaSelecionada.id) {
-      this.tarefaService.excluir(this.tarefaSelecionada.id).subscribe(
-        () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Tarefa excluída com sucesso',
-          })
-          this.showDeleteModal = false
-          this.carregarTarefas()
-        },
-        (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao excluir tarefa',
-          })
-        },
-      )
+      const response = this.tarefaService.excluir(this.tarefaSelecionada.id)
+
+      if(typeof response === 'string') {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao excluir tarefa',
+        })
+        return
+      }
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'A tarefa foi excluida com sucesso',
+      })
+
+      this.showDeleteModal = false
+      this.carregarTarefas()
     }
   }
 
@@ -132,23 +133,23 @@ export class ListaTarefaComponent implements OnInit {
 
   alterarStatus(tarefa: Tarefa, novoStatus: string): void {
     if (tarefa.id) {
-      this.tarefaService.alterarStatus(tarefa.id, novoStatus).subscribe(
-        () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Status atualizado com sucesso',
-          })
-          this.carregarTarefas()
-        },
-        (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao atualizar status',
-          })
-        },
-      )
+      const response = this.tarefaService.alterarStatus(tarefa.id, novoStatus)
+
+      if (typeof response === 'string') {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao atualizar status',
+        })
+        return
+      }
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Sucesso',
+        detail: 'Status atualizado com sucesso',
+      })
+      this.carregarTarefas()
     }
   }
 }

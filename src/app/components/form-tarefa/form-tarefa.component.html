@@ -129,6 +129,7 @@
             [label]="isEdicao ? 'SALVAR' : 'CADASTRAR'"
             [icon]="isEdicao ? 'fas fa-save' : 'fas fa-plus'"
             styleClass="ui-button-success"
+            [disabled]="tarefaCriada"
           ></p-button>
           <p-button
             type="button"
