@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { MessageService } from 'primeng/api'
-import { Tarefa } from 'src/app/models/tarefa.model'
+import { Prioridade, Tarefa } from 'src/app/models/tarefa.model'
 import { TarefaService } from 'src/app/services/tarefa.service'
 
 @Component({
@@ -36,39 +36,21 @@ export class ListaTarefaComponent implements OnInit {
     this.tarefas = this.tarefaService.listarPorUsuario(this.usuarioId)
   }
 
-  getStatusIcon(status: string): string {
-    switch (status) {
-      case 'pendente':
-        return 'far fa-circle'
-      case 'em_andamento':
-        return 'fas fa-adjust'
-      case 'concluida':
-        return 'fas fa-check-circle'
-      default:
-        return 'far fa-circle'
-    }
+  getStatusIcon(concluida: boolean): string {
+    return concluida ? 'fas fa-check-circle' : 'far fa-circle'
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'pendente':
-        return 'status-pendente'
-      case 'em_andamento':
-        return 'status-andamento'
-      case 'concluida':
-        return 'status-concluida'
-      default:
-        return ''
-    }
+  getStatusClass(concluida: boolean): string {
+    return concluida ? 'status-concluida' : 'status-pendente'
   }
 
   getPrioridadeClass(prioridade: string): string {
     switch (prioridade) {
-      case 'alta':
+      case Prioridade.ALTA:
         return 'prioridade-alta'
-      case 'media':
+      case Prioridade.MEDIA:
         return 'prioridade-media'
-      case 'baixa':
+      case Prioridade.BAIXA:
         return 'prioridade-baixa'
       default:
         return ''
@@ -77,18 +59,18 @@ export class ListaTarefaComponent implements OnInit {
 
   getPrioridadeLabel(prioridade: string): string {
     switch (prioridade) {
-      case 'alta':
+      case Prioridade.ALTA:
         return 'Alta'
-      case 'media':
+      case Prioridade.MEDIA:
         return 'Média'
-      case 'baixa':
+      case Prioridade.BAIXA:
         return 'Baixa'
       default:
         return ''
     }
   }
 
-  formatarData(data: string): string {
+  formatarData(data: Date): string {
     if (!data) return ''
     const date = new Date(data)
     return date.toLocaleDateString('pt-BR')
@@ -107,7 +89,7 @@ export class ListaTarefaComponent implements OnInit {
     if (this.tarefaSelecionada.id) {
       const response = this.tarefaService.excluir(this.tarefaSelecionada.id)
 
-      if(typeof response === 'string') {
+      if (typeof response === undefined) {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
@@ -131,11 +113,11 @@ export class ListaTarefaComponent implements OnInit {
     this.showDeleteModal = false
   }
 
-  alterarStatus(tarefa: Tarefa, novoStatus: string): void {
+  toggleConcluida(tarefa: Tarefa): void {
     if (tarefa.id) {
-      const response = this.tarefaService.alterarStatus(tarefa.id, novoStatus)
+      const response = this.tarefaService.toggleConcluida(tarefa.id)
 
-      if (typeof response === 'string') {
+      if (typeof response === undefined) {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
@@ -147,7 +129,7 @@ export class ListaTarefaComponent implements OnInit {
       this.messageService.add({
         severity: 'success',
         summary: 'Sucesso',
-        detail: 'Status atualizado com sucesso',
+        detail: response!.concluida ? 'Tarefa concluída!' : 'Tarefa reaberta',
       })
       this.carregarTarefas()
     }

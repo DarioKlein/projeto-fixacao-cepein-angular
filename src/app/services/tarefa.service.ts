@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { Observable, throwError } from 'rxjs'
 import { Tarefa } from '../models/tarefa.model'
 
 @Injectable({
@@ -10,76 +9,98 @@ export class TarefaService {
 
   listarPorUsuario(usuarioId: number): Tarefa[] {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      return tarefas.filter((tarefa: Tarefa) => tarefa.usuarioId === usuarioId)
-    }
-    return []
+    if (!data) return []
+
+    const tarefas: Tarefa[] = JSON.parse(data)
+    const filtered = tarefas
+      .filter((tarefa: Tarefa) => tarefa.usuarioId === usuarioId)
+      .sort((a, b) => {
+        const order: { [key: string]: number } = {
+          alta: 0,
+          media: 1,
+          baixa: 2,
+        }
+        return order[a.prioridade] - order[b.prioridade]
+      })
+    return filtered
   }
 
-  cadastrar(tarefa: Tarefa): Tarefa | string {
+  cadastrar(tarefa: Tarefa): Tarefa {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      tarefa.id = tarefas.length + 1
-      tarefas.push(tarefa)
-      localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
-      return this.buscarPorId(tarefa.id!)
+    const tarefas: Tarefa[] = data ? JSON.parse(data) : []
+
+    const novoId =
+      tarefas.length > 0 ? Math.max(...tarefas.map((t) => t.id || 0)) + 1 : 1
+
+    const novaTarefa: Tarefa = {
+      ...tarefa,
+      id: novoId,
     }
-    tarefa.id = 1
-    const tarefas = [tarefa]
+
+    tarefas.push(novaTarefa)
     localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
-    return this.buscarPorId(tarefa.id!)
+
+    return novaTarefa
   }
 
-  buscarPorId(id: number): Tarefa | string {
+  buscarPorId(id: number): Tarefa | undefined {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      return tarefas.find((tarefa: Tarefa) => tarefa.id === id)
-    }
-    return 'Erro ao buscar tarefa'
+    if (!data) return undefined
+
+    const tarefas = JSON.parse(data)
+    return tarefas.find((tarefa: Tarefa) => tarefa.id === id)
   }
 
-  alterar(id: number, tarefa: Tarefa): Tarefa | string {
+  alterar(id: number, tarefa: Tarefa): Tarefa | undefined {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      const index = tarefas.findIndex((t: Tarefa) => t.id === id)
-      if (index !== -1) {
-        tarefas[index] = tarefa
-        localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
-        return this.buscarPorId(id)
-      }
+    if (!data) return undefined
+
+    const tarefas = JSON.parse(data)
+
+    const index = tarefas.findIndex((t: Tarefa) => t.id === id)
+    if (index === -1) return undefined
+
+    const tarefaAtualizada: Tarefa = {
+      ...tarefas[index],
+      ...tarefa,
+      id,
     }
-    return 'Erro ao alterar tarefa'
+
+    tarefas[index] = tarefaAtualizada
+    localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
+
+    return tarefaAtualizada
   }
 
-  excluir(id: number): Tarefa | string {
+  excluir(id: number): Tarefa | undefined {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      const index = tarefas.findIndex((t: Tarefa) => t.id === id)
-      if (index !== -1) {
-        tarefas.splice(index, 1)
-        localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
-        return this.buscarPorId(id)
-      }
-    }
-    return 'Erro ao excluir tarefa'
+    if (!data) return undefined
+
+    const tarefas = JSON.parse(data)
+
+    const index = tarefas.findIndex((t: Tarefa) => t.id === id)
+    if (index === -1) return undefined
+
+    const removida = tarefas.splice(index, 1)[0]
+
+    localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
+
+    return removida
   }
 
-  alterarStatus(id: number, status: string): Tarefa | string {
+  toggleConcluida(id: number): Tarefa | undefined {
     const data = localStorage.getItem('listaTarefas')
-    if (data) {
-      const tarefas = JSON.parse(data)
-      const index = tarefas.findIndex((t: Tarefa) => t.id === id)
-      if (index !== -1) {
-        tarefas[index].status = status
-        localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
-        return this.buscarPorId(id)
-      }
-    }
-    return 'Erro ao alterar status'
+    if (!data) return undefined
+
+    const tarefas = JSON.parse(data)
+
+    const index = tarefas.findIndex((t: Tarefa) => t.id === id)
+    if (index === -1) return undefined
+
+    tarefas[index].concluida = !tarefas[index].concluida
+
+    localStorage.setItem('listaTarefas', JSON.stringify(tarefas))
+
+    return tarefas[index]
   }
 }

@@ -78,7 +78,7 @@
                   type="radio"
                   id="baixa"
                   formControlName="prioridade"
-                  value="baixa"
+                  [value]="prioridadeBAIXA"
                 />
                 <label for="baixa" class="prioridade-baixa">Baixa</label>
               </div>
@@ -87,7 +87,7 @@
                   type="radio"
                   id="media"
                   formControlName="prioridade"
-                  value="media"
+                  [value]="prioridadeMEDIA"
                 />
                 <label for="media" class="prioridade-media">Média</label>
               </div>
@@ -96,7 +96,7 @@
                   type="radio"
                   id="alta"
                   formControlName="prioridade"
-                  value="alta"
+                  [value]="prioridadeALTA"
                 />
                 <label for="alta" class="prioridade-alta">Alta</label>
               </div>

@@ -1,9 +1,15 @@
+export enum Prioridade {
+  BAIXA = 'baixa',
+  MEDIA = 'media',
+  ALTA = 'alta',
+}
+
 export interface Tarefa {
   id?: number
   titulo: string
   descricao: string
-  prioridade: 'baixa' | 'media' | 'alta'
-  dataLimite: string
-  status: 'pendente' | 'em_andamento' | 'concluida'
+  prioridade: Prioridade
+  dataLimite: Date
+  concluida: boolean
   usuarioId: number
 }

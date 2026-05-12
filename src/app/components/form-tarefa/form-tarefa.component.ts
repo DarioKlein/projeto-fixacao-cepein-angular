@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MessageService } from 'primeng/api'
-import { Tarefa } from 'src/app/models/tarefa.model'
+import { Prioridade, Tarefa } from 'src/app/models/tarefa.model'
 import { TarefaService } from 'src/app/services/tarefa.service'
 
 @Component({
@@ -17,6 +17,10 @@ export class FormTarefaComponent implements OnInit {
   tarefaId!: number
   usuarioId!: number
   tarefaCriada = false
+
+  prioridadeBAIXA = Prioridade.BAIXA
+  prioridadeMEDIA = Prioridade.MEDIA
+  prioridadeALTA = Prioridade.ALTA
 
   constructor(
     private tarefaService: TarefaService,
@@ -61,7 +65,7 @@ export class FormTarefaComponent implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(500),
       ]),
-      prioridade: new FormControl('media', [Validators.required]),
+      prioridade: new FormControl(Prioridade.MEDIA, [Validators.required]),
       dataLimite: new FormControl('', [Validators.required]),
     })
   }
@@ -83,13 +87,13 @@ export class FormTarefaComponent implements OnInit {
   }
 
   carregarTarefa(): void {
-    const response = this.tarefaService.buscarPorId(this.tarefaId)
+    const response = this.tarefaService.buscarPorId(Number(this.tarefaId))
 
-    if (typeof response == 'string') {
+    if (!response) {
       this.messageService.add({
         severity: 'error',
         summary: 'Erro',
-        detail: 'Erro ao carregar tarefa',
+        detail: 'Tarefa não encontrada',
       })
       return
     }
@@ -110,14 +114,14 @@ export class FormTarefaComponent implements OnInit {
 
     const tarefa: Tarefa = {
       ...this.form.value,
-      status: 'pendente',
+      concluida: false,
       usuarioId: this.usuarioId,
     }
 
     if (this.isEdicao && this.tarefaId) {
-      const response = this.tarefaService.alterar(this.tarefaId, tarefa)
+      const response = this.tarefaService.alterar(Number(this.tarefaId), tarefa)
 
-      if (typeof response == 'string') {
+      if (response == undefined) {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
@@ -132,11 +136,11 @@ export class FormTarefaComponent implements OnInit {
         detail: 'Tarefa atualizada com sucesso',
       })
 
-      setTimeout(() => this.router.navigate(['/']), 1500)
+      setTimeout(() => this.router.navigate(['/']), 500)
     } else {
       const response = this.tarefaService.cadastrar(tarefa)
 
-      if (typeof response == 'string') {
+      if (typeof response == undefined) {
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',
