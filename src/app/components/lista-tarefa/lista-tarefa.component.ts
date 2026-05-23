@@ -11,9 +11,17 @@ import { TarefaService } from 'src/app/services/tarefa.service'
 })
 export class ListaTarefaComponent implements OnInit {
   tarefas: Tarefa[] = []
+  tarefasFiltradas: Tarefa[] = []
   usuarioId!: number
   showDeleteModal = false
   tarefaSelecionada!: Tarefa
+  filtroPrioridade: string = 'todas'
+  prioridadeOptions = [
+    { label: 'Todas', value: 'todas' },
+    { label: 'Alta', value: Prioridade.ALTA },
+    { label: 'Média', value: Prioridade.MEDIA },
+    { label: 'Baixa', value: Prioridade.BAIXA },
+  ]
 
   constructor(
     private tarefaService: TarefaService,
@@ -34,6 +42,17 @@ export class ListaTarefaComponent implements OnInit {
 
   carregarTarefas(): void {
     this.tarefas = this.tarefaService.listarPorUsuario(this.usuarioId)
+    this.filtrarTarefas()
+  }
+
+  filtrarTarefas(): void {
+    if (this.filtroPrioridade === 'todas') {
+      this.tarefasFiltradas = [...this.tarefas]
+    } else {
+      this.tarefasFiltradas = this.tarefas.filter(
+        t => t.prioridade === this.filtroPrioridade,
+      )
+    }
   }
 
   getStatusIcon(concluida: boolean): string {

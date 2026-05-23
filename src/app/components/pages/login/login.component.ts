@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router, RouterLink } from '@angular/router'
 import { MessageService } from 'primeng/api'
+import { Subject } from 'rxjs'
+import { takeUntil } from 'rxjs/operators'
 import { UsuarioService } from 'src/app/services/usuario.service'
 
 @Component({
@@ -9,10 +11,12 @@ import { UsuarioService } from 'src/app/services/usuario.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup
   submitted = false
   showPassword = false
+  loading = false
+  private destroy$ = new Subject<void>()
 
   constructor(
     private usuarioService: UsuarioService,
@@ -47,15 +51,24 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
+  }
+
   onSubmit() {
     this.submitted = true
-    if (this.form.invalid) {
+    if (this.form.invalid || this.loading) {
       return
     }
+    this.loading = true
     const loginValue = this.form.value.login
     const senhaValue = this.form.value.senha
-    this.usuarioService.login(loginValue).subscribe(
+    this.usuarioService.login(loginValue).pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(
       (user) => {
+        this.loading = false
         if (user && senhaValue === '123456') {
           localStorage.setItem('usuarioLogado', JSON.stringify(user))
           this.router.navigate(['/'])
@@ -73,6 +86,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (error) => {
+        this.loading = false
         this.messageService.add({
           severity: 'error',
           summary: 'Erro',

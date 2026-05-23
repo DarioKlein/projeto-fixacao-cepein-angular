@@ -19,6 +19,7 @@ import { MessagesModule } from 'primeng/messages'
 import { MessageModule } from 'primeng/message'
 import { InputMaskModule } from 'primeng/inputmask';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { PerfilComponent } from './components/pages/perfil/perfil.component';
 import { ListaTarefaComponent } from './components/lista-tarefa/lista-tarefa.component';
 import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component';
@@ -46,6 +47,7 @@ import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.compon
     InputTextModule,
     InputMaskModule,
     DialogModule,
+    DropdownModule,
     MessagesModule,
     MessageModule,
     ToastModule,

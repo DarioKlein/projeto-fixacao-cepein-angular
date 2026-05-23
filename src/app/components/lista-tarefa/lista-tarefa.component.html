@@ -1,16 +1,24 @@
 <div class="tarefa-container">
   <div class="tarefa-header">
     <h2><i class="fas fa-tasks"></i> Minhas Tarefas</h2>
-    <p-button
-      label="Nova Tarefa"
-      icon="fas fa-plus"
-      routerLink="/tarefa/nova"
-      styleClass="ui-button-success"
-    ></p-button>
+    <div class="tarefa-header-actions">
+      <p-dropdown
+        [options]="prioridadeOptions"
+        [(ngModel)]="filtroPrioridade"
+        (onChange)="filtrarTarefas()"
+        placeholder="Filtrar por prioridade"
+      ></p-dropdown>
+      <p-button
+        label="Nova Tarefa"
+        icon="fas fa-plus"
+        routerLink="/tarefa/nova"
+        styleClass="ui-button-success"
+      ></p-button>
+    </div>
   </div>
 
-  <div class="tarefa-list" *ngIf="tarefas.length > 0">
-    <div class="tarefa-card" *ngFor="let tarefa of tarefas">
+  <div class="tarefa-list" *ngIf="tarefasFiltradas.length > 0">
+    <div class="tarefa-card" *ngFor="let tarefa of tarefasFiltradas">
       <div class="tarefa-info">
         <div class="tarefa-status" [ngClass]="getStatusClass(tarefa.concluida)">
           <i [class]="getStatusIcon(tarefa.concluida)"></i>
@@ -55,7 +63,7 @@
     </div>
   </div>
 
-  <div class="empty-state" *ngIf="tarefas.length === 0">
+  <div class="empty-state" *ngIf="tarefasFiltradas.length === 0">
     <i class="fas fa-clipboard-list"></i>
     <h3>Nenhuma tarefa encontrada</h3>
     <p>Clique em "Nova Tarefa" para criar sua primeira tarefa!</p>
