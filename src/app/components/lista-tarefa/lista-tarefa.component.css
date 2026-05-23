@@ -34,6 +34,7 @@
   justify-content: space-between;
   align-items: center;
   transition: box-shadow 0.3s ease;
+  overflow: hidden;
 }
 
 .tarefa-card:hover {
@@ -60,17 +61,10 @@
 
 .status-pendente {
   color: #6c757d;
-  background: #f8f9fa;
-}
-
-.status-andamento {
-  color: #ffc107;
-  background: #fff3cd;
 }
 
 .status-concluida {
-  color: #28a745;
-  background: #d4edda;
+  color: #43ec6b;
 }
 
 .tarefa-details {
@@ -82,12 +76,16 @@
   font-size: 18px;
   font-weight: 600;
   color: #212529;
+  word-break: break-word;
+  max-width: 95%;
 }
 
 .tarefa-descricao {
   margin: 0 0 10px 0;
   color: #6c757d;
   font-size: 14px;
+  word-break: break-word;
+  max-width: 95%;
 }
 
 .tarefa-meta {
@@ -112,18 +110,18 @@
 }
 
 .prioridade-alta {
-  background: #f8d7da;
-  color: #721c24;
+  background: #e01425;
+  color: #fff;
 }
 
 .prioridade-media {
-  background: #fff3cd;
-  color: #856404;
+  background: #ff9100;
+  color: #fff;
 }
 
 .prioridade-baixa {
-  background: #d4edda;
-  color: #155724;
+  background: #5a8162;
+  color: #fff;
 }
 
 .tarefa-actions {
@@ -140,25 +138,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 .btn-editar {
-  background: #fff3cd;
-  color: #856404;
+  background: #ff9100;
+  color: #fff;
+  padding-left: 2px;
+  padding-bottom: 2px;
 }
 
 .btn-editar:hover {
-  background: #ffeeba;
+  background: #fff;
+  color: #ff9100;
+  border: 0.1rem solid #ff9100;
 }
 
 .btn-concluir {
-  background: #d4edda;
-  color: #155724;
+  background: #43ec6b;
+  color: #fff;
 }
 
 .btn-concluir:hover {
-  background: #c3e6cb;
+  background: #fff;
+  color: #43ec6b;
+  border: 0.1rem solid #43ec6b;
 }
 
 .btn-andamento {
@@ -171,12 +175,14 @@
 }
 
 .btn-excluir {
-  background: #f8d7da;
-  color: #721c24;
+  background: #e01425;
+  color: #fff;
 }
 
 .btn-excluir:hover {
-  background: #f5c6cb;
+  background: #fff;
+  color: #e01425;
+  border: 0.1rem solid #e01425;
 }
 
 .empty-state {

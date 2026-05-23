@@ -99,28 +99,19 @@ textarea.form-control {
   transition: all 0.3s ease;
 }
 
-.prioridade-baixa {
-  color: #28a745;
-}
-
 .prioridade-baixa:hover {
-  background: #d4edda;
-}
-
-.prioridade-media {
-  color: #ffc107;
+  background: #5a8162;
+  color: #fff !important;
 }
 
 .prioridade-media:hover {
-  background: #fff3cd;
-}
-
-.prioridade-alta {
-  color: #dc3545;
+  background: #ff9100;
+  color: #fff !important;
 }
 
 .prioridade-alta:hover {
-  background: #f8d7da;
+  background: #e01425;
+  color: #fff !important;
 }
 
 .form-actions {

@@ -131,8 +131,8 @@
   .container {
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .card-body {
