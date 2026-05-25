@@ -15,6 +15,11 @@
 .header-left {
   display: flex;
   align-items: center;
+  gap: 25px;
+}
+
+.header-link.active {
+  color: #53f4ff;
 }
 
 .header-link {

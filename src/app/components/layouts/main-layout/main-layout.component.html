@@ -1,9 +1,13 @@
 <header class="header">
   <div class="header-container">
     <div class="header-left">
-      <a routerLink="/" class="header-link">
+      <a routerLink="/" class="header-link" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="fas fa-home"></i>
         <span>Home</span>
+      </a>
+      <a routerLink="/historico" class="header-link" routerLinkActive="active">
+        <i class="fas fa-history"></i>
+        <span>Histórico</span>
       </a>
     </div>
     <div class="header-right">

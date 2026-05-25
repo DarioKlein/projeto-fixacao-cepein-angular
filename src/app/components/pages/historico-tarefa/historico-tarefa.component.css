@@ -1,0 +1,212 @@
+.historico-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.historico-header {
+  margin-bottom: 24px;
+}
+
+.historico-header h2 {
+  color: #007bff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.historico-header h2 i {
+  color: #007bff;
+}
+
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filter-item {
+  flex: 1;
+  min-width: 180px;
+}
+
+.filter-search {
+  flex: 2;
+  min-width: 220px;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-wrapper i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding-left: 36px !important;
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.tarefa-titulo {
+  font-weight: 500;
+  color: #333;
+}
+
+.tarefa-descricao {
+  color: #666;
+  display: block;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tarefa-data {
+  color: #555;
+  font-size: 14px;
+}
+
+.prioridade-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.prioridade-alta {
+  background-color: #d32f2f;
+  color: #fff;
+}
+
+.prioridade-media {
+  background-color: #f57c00;
+  color: #fff;
+}
+
+.prioridade-baixa {
+  background-color: #388e3c;
+  color: #fff;
+}
+
+.btn-action {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.btn-reabrir {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.btn-reabrir:hover {
+  background-color: #1976d2;
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.empty-state i {
+  font-size: 64px;
+  color: #4caf50;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: #666;
+}
+
+.text-center-desktop {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .filters-bar {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-item,
+  .filter-search {
+    min-width: 100%;
+  }
+
+  .text-center-desktop {
+    text-align: left;
+  }
+
+  .historico-header h2 {
+    font-size: 20px;
+  }
+
+  .table-wrapper {
+    padding: 10px;
+  }
+
+  .tarefa-descricao {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .historico-header h2 {
+    font-size: 17.5px;
+  }
+
+  .tarefa-titulo {
+    font-size: 18px;
+  }
+
+  .tarefa-descricao {
+    max-width: 325px;
+  }
+
+  .empty-state {
+    padding: 40px 15px;
+  }
+
+  .empty-state i {
+    font-size: 48px;
+  }
+
+  .historico-container {
+    padding: 0 0;
+  }
+}

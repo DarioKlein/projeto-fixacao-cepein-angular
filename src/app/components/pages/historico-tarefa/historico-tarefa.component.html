@@ -1,0 +1,118 @@
+<div class="container-fluid historico-container">
+  <div class="row">
+    <div class="col-12">
+      <div class="historico-header">
+        <h2><i class="fas fa-history"></i> Histórico de Tarefas Concluídas</h2>
+      </div>
+
+      <div class="filters-bar">
+        <div class="filter-item filter-search">
+          <span class="p-input-icon-left search-wrapper">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="pesquisaTitulo"
+              (input)="filtrarTarefas()"
+              placeholder="Pesquisar por título..."
+              class="search-input"
+            />
+          </span>
+        </div>
+        <div class="filter-item">
+          <p-dropdown
+            [options]="prioridadeOptions"
+            [(ngModel)]="filtroPrioridade"
+            (onChange)="filtrarTarefas()"
+            placeholder="Prioridade"
+          ></p-dropdown>
+        </div>
+        <div class="filter-item">
+          <p-dropdown
+            [options]="anoOptions"
+            [(ngModel)]="filtroAno"
+            (onChange)="filtrarTarefas()"
+            placeholder="Ano"
+          ></p-dropdown>
+        </div>
+        <div class="filter-item">
+          <p-dropdown
+            [options]="mesOptions"
+            [(ngModel)]="filtroMes"
+            (onChange)="filtrarTarefas()"
+            placeholder="Mês"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="table-wrapper" *ngIf="tarefas.length > 0; else emptyState">
+        <p-table
+          [value]="tarefasFiltradas"
+          [paginator]="true"
+          [rows]="10"
+          [responsive]="true"
+          [autoLayout]="true"
+          class="historico-table"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="text-center-desktop">Título</th>
+              <th class="text-center-desktop">Descrição</th>
+              <th class="text-center-desktop">Prioridade</th>
+              <th class="text-center-desktop">Data Limite</th>
+              <th class="text-center-desktop" style="width: 100px">Ações</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tarefa>
+            <tr>
+              <td class="text-center-desktop">
+                <span class="tarefa-titulo">{{ tarefa.titulo }}</span>
+              </td>
+              <td class="text-center-desktop">
+                <span class="tarefa-descricao">{{ tarefa.descricao }}</span>
+              </td>
+              <td class="text-center-desktop">
+                <span
+                  class="prioridade-badge"
+                  [ngClass]="getPrioridadeClass(tarefa.prioridade)"
+                >
+                  {{ getPrioridadeLabel(tarefa.prioridade) }}
+                </span>
+              </td>
+              <td class="text-center-desktop">
+                <span class="tarefa-data">
+                  <i class="far fa-calendar-alt"></i>
+                  {{ formatarData(tarefa.dataLimite) }}
+                </span>
+              </td>
+              <td class="text-center-desktop">
+                <button
+                  class="btn-action btn-reabrir"
+                  (click)="reabrirTarefa(tarefa)"
+                  title="Reabrir tarefa"
+                >
+                  <i class="fas fa-undo"></i>
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5" class="text-center-desktop">
+                Nenhuma tarefa concluída encontrada
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <i class="fas fa-check-circle"></i>
+          <h3>Nenhuma tarefa concluída</h3>
+          <p>As tarefas que você concluir aparecerão aqui.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

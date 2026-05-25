@@ -7,6 +7,23 @@ import { Tarefa } from '../models/tarefa.model'
 export class TarefaService {
   constructor() {}
 
+  listarConcluidasPorUsuario(usuarioId: number): Tarefa[] {
+    const data = localStorage.getItem('listaTarefas')
+    if (!data) return []
+
+    const tarefas: Tarefa[] = JSON.parse(data)
+    return tarefas
+      .filter((tarefa: Tarefa) => tarefa.usuarioId === usuarioId && tarefa.concluida)
+      .sort((a, b) => {
+        const order: { [key: string]: number } = {
+          alta: 0,
+          media: 1,
+          baixa: 2,
+        }
+        return order[a.prioridade] - order[b.prioridade]
+      })
+  }
+
   listarPorUsuario(usuarioId: number): Tarefa[] {
     const data = localStorage.getItem('listaTarefas')
     if (!data) return []

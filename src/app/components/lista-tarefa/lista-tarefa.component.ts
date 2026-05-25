@@ -41,7 +41,9 @@ export class ListaTarefaComponent implements OnInit {
   }
 
   carregarTarefas(): void {
-    this.tarefas = this.tarefaService.listarPorUsuario(this.usuarioId)
+    this.tarefas = this.tarefaService
+      .listarPorUsuario(this.usuarioId)
+      .filter(t => !t.concluida)
     this.filtrarTarefas()
   }
 

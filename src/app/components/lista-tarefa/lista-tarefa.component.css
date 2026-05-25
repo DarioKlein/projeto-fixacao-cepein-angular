@@ -230,4 +230,9 @@
     gap: 15px;
     align-items: flex-start;
   }
+
+  .tarefa-header-actions {
+    flex-direction: column;
+    align-items: start;
+  }
 }

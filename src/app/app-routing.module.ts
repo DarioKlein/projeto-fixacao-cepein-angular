@@ -8,6 +8,7 @@ import { NotFoundComponent } from './components/pages/not-found/not-found.compon
 import { CadastroComponent } from './components/pages/cadastro/cadastro.component'
 import { PerfilComponent } from './components/pages/perfil/perfil.component'
 import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component'
+import { HistoricoTarefaComponent } from './components/pages/historico-tarefa/historico-tarefa.component'
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'perfil', component: PerfilComponent },
+      { path: 'historico', component: HistoricoTarefaComponent },
       { path: 'tarefa/nova', component: FormTarefaComponent },
       { path: 'tarefa/editar/:id', component: FormTarefaComponent },
     ],

@@ -57,3 +57,13 @@ body .ui-dialog .ui-dialog-content {
 .ui-toast-close-icon:hover {
   text-decoration: none !important;
 }
+
+@media (max-width: 576px) {
+  tbody .ng-star-inserted {
+    border-bottom: 0.5px solid #ccc8c8 !important;
+  }
+
+  tbody .ng-star-inserted:last-child {
+    border-bottom: 0px !important;
+  }
+}
