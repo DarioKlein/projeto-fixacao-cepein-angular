@@ -1,3 +1,5 @@
+<p-messages key="vencidas"></p-messages>
+
 <div class="tarefa-container">
   <div class="tarefa-header">
     <h2><i class="fas fa-tasks"></i> Minhas Tarefas</h2>
@@ -18,49 +20,13 @@
   </div>
 
   <div class="tarefa-list" *ngIf="tarefasFiltradas.length > 0">
-    <div class="tarefa-card" *ngFor="let tarefa of tarefasFiltradas">
-      <div class="tarefa-info">
-        <div class="tarefa-status" [ngClass]="getStatusClass(tarefa.concluida)">
-          <i [class]="getStatusIcon(tarefa.concluida)"></i>
-        </div>
-        <div class="tarefa-details">
-          <h3 class="tarefa-titulo">{{ tarefa.titulo }}</h3>
-          <p class="tarefa-descricao">{{ tarefa.descricao }}</p>
-          <div class="tarefa-meta">
-            <span class="tarefa-data">
-              <i class="far fa-calendar-alt"></i> {{ formatarData(tarefa.dataLimite) }}
-            </span>
-            <span class="tarefa-prioridade" [ngClass]="getPrioridadeClass(tarefa.prioridade)">
-              {{ getPrioridadeLabel(tarefa.prioridade) }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="tarefa-actions">
-        <button
-          class="btn-action btn-editar"
-          (click)="editar(tarefa)"
-          title="Editar"
-          *ngIf="!tarefa.concluida"
-        >
-          <i class="fas fa-edit"></i>
-        </button>
-        <button
-          class="btn-action btn-concluir"
-          (click)="toggleConcluida(tarefa)"
-          [title]="tarefa.concluida ? 'Reabrir' : 'Concluir'"
-        >
-          <i [class]="tarefa.concluida ? 'fas fa-undo' : 'fas fa-check'"></i>
-        </button>
-        <button
-          class="btn-action btn-excluir"
-          (click)="excluir(tarefa)"
-          title="Excluir"
-        >
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
-    </div>
+    <app-card-tarefa
+      *ngFor="let tarefa of tarefasFiltradas"
+      [tarefa]="tarefa"
+      (editar)="editar($event)"
+      (excluir)="excluir($event)"
+      (toggleConcluida)="toggleConcluida($event)"
+    ></app-card-tarefa>
   </div>
 
   <div class="empty-state" *ngIf="tarefasFiltradas.length === 0">

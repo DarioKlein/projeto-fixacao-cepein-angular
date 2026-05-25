@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
 import { MessageService } from 'primeng/api'
 import { Prioridade, Tarefa } from 'src/app/models/tarefa.model'
 import { TarefaService } from 'src/app/services/tarefa.service'
@@ -45,6 +46,8 @@ export class HistoricoTarefaComponent implements OnInit {
   constructor(
     private tarefaService: TarefaService,
     private messageService: MessageService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -52,8 +55,27 @@ export class HistoricoTarefaComponent implements OnInit {
     if (usuarioStorage) {
       const usuario = JSON.parse(usuarioStorage)
       this.usuarioId = usuario.id
+      this.pesquisaTitulo = this.route.snapshot.queryParamMap.get('titulo') || ''
+      this.filtroPrioridade = this.route.snapshot.queryParamMap.get('prioridade') || 'todas'
+      const ano = this.route.snapshot.queryParamMap.get('ano')
+      this.filtroAno = ano ? Number(ano) : null
+      const mes = this.route.snapshot.queryParamMap.get('mes')
+      this.filtroMes = mes ? Number(mes) : null
       this.carregarTarefas()
     }
+  }
+
+  atualizarUrl(): void {
+    const queryParams: any = {}
+    if (this.pesquisaTitulo) queryParams.titulo = this.pesquisaTitulo
+    if (this.filtroPrioridade !== 'todas') queryParams.prioridade = this.filtroPrioridade
+    if (this.filtroAno) queryParams.ano = this.filtroAno
+    if (this.filtroMes) queryParams.mes = this.filtroMes
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      replaceUrl: true,
+    })
   }
 
   carregarTarefas(): void {
@@ -79,6 +101,7 @@ export class HistoricoTarefaComponent implements OnInit {
   }
 
   filtrarTarefas(): void {
+    this.atualizarUrl()
     this.tarefasFiltradas = this.tarefas.filter((t) => {
       const matchTitulo =
         !this.pesquisaTitulo ||

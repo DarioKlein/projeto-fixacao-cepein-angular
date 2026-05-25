@@ -25,6 +25,7 @@ import { PerfilComponent } from './components/pages/perfil/perfil.component';
 
 import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component';
 import { HistoricoTarefaComponent } from './components/pages/historico-tarefa/historico-tarefa.component';
+import { CardTarefaComponent } from './components/card-tarefa/card-tarefa.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HistoricoTarefaComponent } from './components/pages/historico-tarefa/hi
     PerfilComponent,
     FormTarefaComponent,
     HistoricoTarefaComponent,
+    CardTarefaComponent,
   ],
   imports: [
     BrowserModule,

@@ -35,8 +35,29 @@ export class HomeComponent implements OnInit {
       const usuario = JSON.parse(usuarioStorage)
       this.usuarioId = usuario.id
       this.carregarTarefas()
+      setTimeout(() => this.verificarTarefasVencidas())
     } else {
       this.router.navigate(['/auth/login'])
+    }
+  }
+
+  verificarTarefasVencidas(): void {
+    const todas = this.tarefaService.listarPorUsuario(this.usuarioId)
+    const hoje = new Date()
+    hoje.setHours(0, 0, 0, 0)
+    const vencidas = todas.filter(t => {
+      if (t.concluida) return false
+      const dataLimite = new Date(t.dataLimite)
+      return dataLimite < hoje
+    })
+    if (vencidas.length > 0) {
+      this.messageService.add({
+        key: 'vencidas',
+        severity: 'warn',
+        summary: 'Tarefas Vencidas',
+        detail: `Você tem ${vencidas.length} tarefa(s) vencida(s).`,
+        closable: true,
+      })
     }
   }
 
@@ -55,46 +76,6 @@ export class HomeComponent implements OnInit {
         t => t.prioridade === this.filtroPrioridade,
       )
     }
-  }
-
-  getStatusIcon(concluida: boolean): string {
-    return concluida ? 'fas fa-check-circle' : 'far fa-circle'
-  }
-
-  getStatusClass(concluida: boolean): string {
-    return concluida ? 'status-concluida' : 'status-pendente'
-  }
-
-  getPrioridadeClass(prioridade: string): string {
-    switch (prioridade) {
-      case Prioridade.ALTA:
-        return 'prioridade-alta'
-      case Prioridade.MEDIA:
-        return 'prioridade-media'
-      case Prioridade.BAIXA:
-        return 'prioridade-baixa'
-      default:
-        return ''
-    }
-  }
-
-  getPrioridadeLabel(prioridade: string): string {
-    switch (prioridade) {
-      case Prioridade.ALTA:
-        return 'Alta'
-      case Prioridade.MEDIA:
-        return 'Média'
-      case Prioridade.BAIXA:
-        return 'Baixa'
-      default:
-        return ''
-    }
-  }
-
-  formatarData(data: Date): string {
-    if (!data) return ''
-    const date = new Date(data)
-    return date.toLocaleDateString('pt-BR')
   }
 
   editar(tarefa: Tarefa): void {

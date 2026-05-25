@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { dataFutura } from 'src/app/validators/custom.validators'
 import { ActivatedRoute, Router } from '@angular/router'
 import { MessageService } from 'primeng/api'
 import { Prioridade, Tarefa } from 'src/app/models/tarefa.model'
@@ -66,7 +67,7 @@ export class FormTarefaComponent implements OnInit {
         Validators.maxLength(500),
       ]),
       prioridade: new FormControl(Prioridade.MEDIA, [Validators.required]),
-      dataLimite: new FormControl('', [Validators.required]),
+      dataLimite: new FormControl('', [Validators.required, dataFutura()]),
     })
   }
 

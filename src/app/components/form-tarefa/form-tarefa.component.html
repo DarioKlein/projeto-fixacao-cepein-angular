@@ -119,6 +119,11 @@
                 severity="error"
                 text="Data limite é obrigatória"
               ></p-message>
+              <p-message
+                *ngIf="dataLimite.errors.dataFutura"
+                severity="error"
+                text="A data deve ser futura"
+              ></p-message>
             </div>
           </div>
         </div>
