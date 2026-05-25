@@ -14,7 +14,7 @@
 
 | Perfil | Mobile |
 |---|---|
-| ![Perfil](.github/perfil.png) | ![Mobile](.github/mobile.png) |
+| ![Perfil](.github/perfil.png) | ![Mobile](.github/mobile-home.png) |
 
 ## Funcionalidades
 
