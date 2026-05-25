@@ -22,7 +22,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { PerfilComponent } from './components/pages/perfil/perfil.component';
-import { ListaTarefaComponent } from './components/lista-tarefa/lista-tarefa.component';
+
 import { FormTarefaComponent } from './components/form-tarefa/form-tarefa.component';
 import { HistoricoTarefaComponent } from './components/pages/historico-tarefa/historico-tarefa.component';
 
@@ -36,7 +36,6 @@ import { HistoricoTarefaComponent } from './components/pages/historico-tarefa/hi
     NotFoundComponent,
     CadastroComponent,
     PerfilComponent,
-    ListaTarefaComponent,
     FormTarefaComponent,
     HistoricoTarefaComponent,
   ],
