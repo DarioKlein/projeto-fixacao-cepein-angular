@@ -53,7 +53,7 @@
 
 ## Pré-requisitos
 
-- Node.js 12+ (recomendado 14.x)
+- Node.js 12+ (recomendado 16.x)
 - npm 6+
 - Angular CLI 8.3 (`npm install -g @angular/cli@8`)
 
