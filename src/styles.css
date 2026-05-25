@@ -58,6 +58,12 @@ body .ui-dialog .ui-dialog-content {
   text-decoration: none !important;
 }
 
+@media (max-width: 768px) {
+  .filter-item .ui-dropdown {
+    min-width: 100% !important;
+  }
+}
+
 @media (max-width: 576px) {
   tbody .ng-star-inserted {
     border-bottom: 0.5px solid #ccc8c8 !important;
@@ -65,5 +71,12 @@ body .ui-dialog .ui-dialog-content {
 
   tbody .ng-star-inserted:last-child {
     border-bottom: 0px !important;
+  }
+
+  .tarefa-header-actions p-dropdown,
+  .tarefa-header-actions p-dropdown .ui-dropdown,
+  .tarefa-header-actions p-button,
+  .tarefa-header-actions p-button .ui-button {
+    width: 100% !important;
   }
 }

@@ -226,6 +226,7 @@
   }
 
   .tarefa-header {
+    width: 100%;
     flex-direction: column;
     gap: 15px;
     align-items: flex-start;
@@ -234,5 +235,6 @@
   .tarefa-header-actions {
     flex-direction: column;
     align-items: start;
+    width: 100%;
   }
 }

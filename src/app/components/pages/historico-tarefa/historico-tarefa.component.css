@@ -29,13 +29,12 @@
 }
 
 .filter-item {
-  flex: 1;
   min-width: 180px;
 }
 
 .filter-search {
   flex: 2;
-  min-width: 220px;
+  min-width: 240px;
 }
 
 .search-wrapper {
@@ -165,7 +164,11 @@
 
   .filter-item,
   .filter-search {
-    min-width: 100%;
+    min-width: 100% !important;
+  }
+
+  .filter-item .ui-dropdown {
+    min-width: 100% !important;
   }
 
   .text-center-desktop {
